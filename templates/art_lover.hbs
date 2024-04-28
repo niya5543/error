@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Art Lover</title>
+  <link rel="stylesheet" href="styles.css"> <!-- Link your CSS file -->
+  <style>
+    /* Additional CSS styles specific to the art lover page */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+    
+    .artworks-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 20px;
+    }
+    
+    .artwork {
+      margin: 10px;
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent white background */
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .artwork img {
+      max-width: 100%;
+      border-radius: 10px;
+    }
+    
+    .artwork-comments {
+      margin-top: 10px;
+    }
+    
+    .artwork-comments textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    
+    .artwork-comments button {
+      padding: 8px 15px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    
+    /* Add more styles as needed */
+  </style>
+</head>
+<body>
+
+  <div class="artworks-container">
+    <!-- Artwork 1 -->
+    <div class="artwork">
+      <img src="artwork1.jpg" alt="Artwork 1">
+      <div class="artwork-comments">
+        <textarea placeholder="Add your comment"></textarea>
+        <button>Submit</button>
+      </div>
+    </div>
+    <!-- Artwork 2 -->
+    <div class="artwork">
+      <img src="artwork2.jpg" alt="Artwork 2">
+      <div class="artwork-comments">
+        <textarea placeholder="Add your comment"></textarea>
+        <button>Submit</button>
+      </div>
+    </div>
+    <!-- Add more artworks as needed -->
+  </div>
+
+</body>
+</html>

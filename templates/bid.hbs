@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bid for Artwork</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('welcome.jpg'); /* Add background image */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        #artwork-details {
+            text-align: center;
+        }
+
+        #artwork-image {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+
+        #delete-button {
+            display: block;
+            width: 100%;
+            padding: 10px 0;
+            margin-top: 20px;
+            background-color: #270d0d;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        #delete-button:hover {
+            background-color: #240f0f;
+        }
+
+        form {
+            text-align: center;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 10px 0;
+            background-color: #20090c;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #070808;
+        }
+
+        #countdown {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        #admin-controls {
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Place Your Bid</h1>
+    <div id="artwork-details">
+        <img id="artwork-image" src="" alt="Artwork">
+        <p id="artwork-description"></p>
+        <p id="artwork-price"></p>
+        <p id="countdown"></p>
+        <form id="bid-form">
+            <label for="bid-amount">Your Bid Amount:</label><br>
+            <input type="number" id="bid-amount" name="bid-amount" min="0" required><br><br>
+            <button type="submit">Submit Bid</button>
+        </form>
+        <button id="delete-button" onclick="deleteBid()">Delete</button>
+    </div>
+    <div id="admin-controls">
+        <button onclick="setAuctionTimer()">Set Auction Timer</button>
+        <input type="password" id="admin-id" placeholder="Admin ID">
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Retrieve artwork details from local storage
+        const artwork = JSON.parse(localStorage.getItem('currentArtwork'));
+
+        // Display artwork details
+        document.getElementById('artwork-image').src = artwork.image;
+        document.getElementById('artwork-description').textContent = artwork.description;
+        document.getElementById('artwork-price').textContent = 'Price: $' + artwork.price;
+
+        // Set minimum bid amount to artwork price
+        document.getElementById('bid-amount').value = artwork.price;
+        document.getElementById('bid-amount').min = artwork.price;
+
+        // Calculate and display countdown timer
+        updateCountdown();
+
+        // Update countdown every second
+        setInterval(updateCountdown, 1000);
+    });
+
+    
+    function deleteBid() {
+        localStorage.removeItem('currentArtwork');
+        window.location.href = 'art.html';
+    }
+
+    function setAuctionTimer() {
+        const adminID = document.getElementById('admin-id').value.trim();
+        // Validate admin ID
+        if (adminID === 'your_admin_id') { // Replace 'your_admin_id' with your actual admin ID
+            const newEndTime = prompt('Enter new auction end time (YYYY-MM-DD HH:MM:SS):');
+            const parsedDate = new Date(newEndTime);
+            if (!isNaN(parsedDate)) {
+                localStorage.setItem('auctionEndTime', parsedDate);
+                updateCountdown();
+            } else {
+                alert('Invalid date format. Please use YYYY-MM-DD HH:MM:SS format.');
+            }
+        } else {
+            alert('Invalid admin ID.');
+        }
+    }
+
+    const bidForm = document.getElementById('bid-form');
+    bidForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const bidAmount = parseFloat(document.getElementById('bid-amount').value);
+        const artwork = JSON.parse(localStorage.getItem('currentArtwork'));
+        if (bidAmount > parseFloat(artwork.price)) {
+            localStorage.setItem('bidAmount', bidAmount);
+            window.location.href = 'buy.html';
+        } else {
+            alert('Your bid amount must be higher than the current price.');
+        }
+    });
+</script>
+
+</body>
+</html>
+

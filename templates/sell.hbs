@@ -1,0 +1,127 @@
+!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sell Artwork</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-image: url('welcome.jpg'); /* Replace 'welcome.jpg' with the path to your background image */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .upload-section {
+      text-align: center;
+    }
+
+    #uploadButton {
+      font-size: 24px;
+      background-color: #1d0606;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      padding: 15px 20px;
+      cursor: pointer;
+    }
+
+    #uploadForm {
+      margin-top: 20px;
+    }
+
+    #uploadForm input,
+    #uploadForm textarea {
+      display: block;
+      margin-bottom: 10px;
+      width: calc(100% - 20px);
+      padding: 10px;
+    }
+
+    #uploadForm textarea {
+      height: 100px;
+    }
+
+    #submitButton {
+      background-color: #240910;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Sell Artwork</h1>
+    <div id="sellerInfoForm">
+      <!-- sell.hbs -->
+      <form action="/sell" method="POST" enctype="multipart/form-data"></form>>
+        <label for="sellerEmail">Enter your Gmail ID:</label>
+        <input type="email" id="sellerEmail" name="email" placeholder="Your Gmail ID">
+        <button type="button" id="submitSellerInfo">Proceed</button>
+      </form>
+    </div>
+    <div class="upload-section hidden" id="artworkUploadSection">
+      <button id="uploadButton">+</button>
+      <div id="uploadForm" class="hidden">
+        <input type="file" id="fileInput" accept="image/*">
+        <textarea id="description" placeholder="Enter description..."></textarea>
+        <input type="text" id="price" placeholder="Enter price...">
+        <button id="submitButton">Submit</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    document.getElementById('submitSellerInfo').addEventListener('click', function() {
+      const sellerEmail = document.getElementById('sellerEmail').value;
+      if (!sellerEmail) {
+        alert('Please enter your Gmail ID.');
+        return;
+      }
+      document.getElementById('sellerInfoForm').classList.add('hidden');
+      document.getElementById('artworkUploadSection').classList.remove('hidden');
+    });
+
+    document.getElementById('uploadButton').addEventListener('click', function() {
+      document.getElementById('uploadForm').classList.toggle('hidden');
+    });
+
+    document.getElementById('submitButton').addEventListener('click', function() {
+      const description = document.getElementById('description').value;
+      const price = document.getElementById('price').value;
+      const fileInput = document.getElementById('fileInput');
+      const file = fileInput.files[0];
+
+      if (!description || !price || !file) {
+        alert('Please fill in all fields');
+        return;
+      }
+
+      // Redirect to '/exhib'
+      window.location.href = '/exhib';
+    });
+  </script>
+</body>
+</html>

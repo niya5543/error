@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sell Artwork</title>
+  <style>
+    /* Your CSS styles here */
+  </style>
+</head>
+<body>
+<div class="container">
+  <h2>Submit Your Gmail ID</h2>
+  <form id="submitForm" action="/addart" method="POST" enctype="multipart/form-data">
+    <!-- Gmail ID input -->
+    <input type="email" id="email" name="email" placeholder="Enter Gmail ID" required><br><br>
+
+    <h2>Enter Description</h2>
+    <input type="text" id="description" name="description" placeholder="Enter Description" required><br><br>
+
+    <h2>Enter Price Range</h2>
+    <input type="number" id="price" name="price" placeholder="Enter Price" required><br><br>
+
+    <h2>Upload Image</h2>
+    <input type="file" id="fileInput" name="image" accept="image/*" required><br><br>
+
+    <!-- Submit button -->
+    <button type="submit">Submit</button>
+  </form>
+</div>
+
+<script>
+  document.getElementById("submitForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+    var email = document.getElementById("email").value;
+    var description = document.getElementById("description").value;
+    var price = document.getElementById("price").value;
+
+    // Example: validation
+    if (!email || !description || !price) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
+    // Example: clear form fields
+    document.getElementById("submitForm").reset();
+
+    // Example: send form data to server using fetch
+    var formData = new FormData(document.getElementById("submitForm"));
+    fetch("/addart", {
+      method: "POST",
+      body: formData
+    })
+    .then(response => {
+      if (response.ok) {
+        // Redirect to /art on successful submission
+        window.location.href = "/art";
+      } else {
+        throw new Error("Network response was not ok.");
+      }
+    })
+    .catch(error => {
+      console.error("Error:", error);
+    });
+  });
+</script>
+
+</body>
+</html>

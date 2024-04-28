@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Exhibition</title>
+  <link rel="stylesheet" href="styles.css"> <!-- Link your CSS file -->
+  <style>
+    /* Additional CSS styles specific to the create exhibition page */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-image: url('welcome.jpg'); /* Replace 'welcome_background.jpg' with your image path */
+      background-size: cover;
+      background-position: center;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    
+    .content {
+      background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent white background */
+      padding: 30px;
+      border-radius: 10px;
+    }
+    
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+    
+    p {
+      color: #333;
+      margin-bottom: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="content">
+    <h1>Welcome to Our Exhibition Creator</h1>
+    <form id="create_e" action="/create" method="post"></form>
+    <p>Create your own exhibition and showcase your artworks to the world!</p>
+     <button onclick="window.location.href='/exhib'">Start Exhibition</button>
+    
+    
+  </div>
+
+</body>
+</html>

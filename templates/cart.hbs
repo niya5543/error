@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Art Cart</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+    }
+    h1 {
+      text-align: center;
+    }
+    .artwork {
+      margin-bottom: 20px;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 10px;
+    }
+    .artwork img {
+      width: 150px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+    .artwork-info {
+      text-align: center;
+    }
+    .artwork-price {
+      font-weight: bold;
+    }
+    .delete-button {
+      display: inline-block;
+      margin-left: 10px;
+      padding: 5px 10px;
+      background-color: #dc3545;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .total-price {
+      margin-top: 20px;
+      text-align: center;
+      font-weight: bold;
+    }
+    .buy-button {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Your Art Cart</h1>
+    <div id="cart-items"></div>
+    <div class="total-price" id="total-price"></div>
+    <button class="buy-button" onclick="buy()">Buy</button>
+  </div>
+
+  <script>
+    // Retrieve cart items from local storage
+    let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+    // Display cart items
+    const cartItemsDiv = document.getElementById('cart-items');
+    const totalPriceDiv = document.getElementById('total-price');
+    let totalPrice = 0;
+
+    cartItems.forEach(function(item, index) {
+      const artworkDiv = document.createElement('div');
+      artworkDiv.classList.add('artwork');
+      artworkDiv.innerHTML = `
+        <img src="${item.image}" alt="${item.description}">
+        <div class="artwork-info">
+          <p>${item.description}</p>
+          <p class="artwork-price">$${item.price}</p>
+        </div>
+        <button class="delete-button" onclick="removeItem(${index})">Delete</button>
+      `;
+      cartItemsDiv.appendChild(artworkDiv);
+
+      // Remove "$" and convert price to number
+      totalPrice += parseFloat(item.price.replace('$', ''));
+    });
+
+    // Display total price
+    totalPriceDiv.textContent = `Total: $${totalPrice.toFixed(2)}`; // Round to 2 decimal places
+
+    // Function to handle buying
+    function buy() {
+      alert('Thank you for your purchase!');
+      // Clear cart after purchase
+      localStorage.removeItem('cartItems');
+      // Redirect to exhibition page after purchase
+      window.location.href = 'exhibition.html';
+    }
+
+    // Function to remove item from cart
+    function removeItem(index) {
+      cartItems.splice(index, 1);
+      // Update cart items in local storage
+      localStorage.setItem('cartItems', JSON.stringify(cartItems));
+      // Reload the page to reflect changes
+      location.reload();
+    }
+  </script>
+</body>
+</html>
